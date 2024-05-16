@@ -1,11 +1,19 @@
 import { calculateInvestmentResults, formatter } from "../util/investment.js";
 
+// const results = []; // error from here - once
+
 export default function Results({ input }) {
-  const resultsData = calculateInvestmentResults(input);
+  const results = [];
+  // const resultsData = calculateInvestmentResults(input);
+  calculateInvestmentResults(input, results);
+
+  if (results.length === 0 ) {
+    return <p className="center">Invalid input data provided.</p>
+  }
   const initialInvestment =
-    resultsData[0].valueEndOfYear -
-    resultsData[0].interest -
-    resultsData[0].annualInvestment;
+    results[0].valueEndOfYear -
+    results[0].interest -
+    results[0].annualInvestment;
 
   return (
     <table id="result">
@@ -19,7 +27,7 @@ export default function Results({ input }) {
         </tr>
       </thead>
       <tbody>
-        {resultsData.map((yearData) => {
+        {results.map((yearData) => {
           const totalInterest =
             yearData.valueEndOfYear -
             yearData.annualInvestment * yearData.year -
